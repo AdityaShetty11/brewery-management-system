@@ -1,0 +1,18 @@
+<?php
+
+/** @var yii\web\View $this */
+/** @var common\models\CustomerCompany $model */
+
+$this->title = 'Add Company';
+?>
+
+<div class="mb-3">
+    <?= \yii\helpers\Html::a('<i class="bi bi-arrow-left me-1"></i>Back to Companies', ['index'], ['class' => 'btn btn-outline-secondary btn-sm']) ?>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h2 class="card-title h5 mb-4">New Customer Company</h2>
+        <?= $this->render('_form', ['model' => $model]) ?>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+# Dependencies
+/vendor/
+/node_modules/
+
+# Yii runtime & generated files
+/backend/runtime/
+/frontend/runtime/
+/console/runtime/
+/common/runtime/
+/backend/web/assets/
+/frontend/web/assets/
+/backend/web/index-test.php
+/frontend/web/index-test.php
+
+# Environment / local config
+/common/config/main-local.php
+/backend/config/main-local.php
+/frontend/config/main-local.php
+/console/config/main-local.php
+/common/config/params-local.php
+/backend/config/params-local.php
+/frontend/config/params-local.php
+/console/config/params-local.php
+
+# Yii2 cookie keys file (if generated)
+/backend/config/cookie-key.php
+/frontend/config/cookie-key.php
+
+# Composer
+/composer.phar
+
+# Logs
+*.log
+/backend/runtime/logs/
+/frontend/runtime/logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo

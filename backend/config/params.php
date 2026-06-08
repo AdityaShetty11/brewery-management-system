@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'adminEmail'   => 'admin@hopsandbarrel.com',
-    'supportEmail' => 'support@hopsandbarrel.com',
+    'adminEmail'   => 'admin@hoferbräuhaus.de',
+    'supportEmail' => 'support@hoferbräuhaus.de',
 ];

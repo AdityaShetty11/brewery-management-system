@@ -150,14 +150,6 @@ class Order extends ActiveRecord
             return false;
         }
 
-        AuditLog::record(
-            'order.status_change',
-            'Order',
-            $this->id,
-            ['status' => $oldStatus],
-            ['status' => $newStatus]
-        );
-
         return true;
     }
 

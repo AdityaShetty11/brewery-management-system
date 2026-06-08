@@ -104,9 +104,9 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             if ($model->signup()) {
                 Yii::$app->session->setFlash('success',
-                    'Thank you for registering! Please check your email to verify your account.'
+                    'Registration successful! You can now sign in.'
                 );
-                return $this->goHome();
+                return $this->redirect(['site/login']);
             }
         }
 

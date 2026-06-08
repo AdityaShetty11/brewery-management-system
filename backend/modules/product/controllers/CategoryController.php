@@ -3,7 +3,7 @@
 namespace backend\modules\product\controllers;
 
 use backend\modules\product\models\CategorySearch;
-use common\models\AuditLog;
+
 use common\models\ProductCategory;
 use Yii;
 use yii\filters\AccessControl;
@@ -49,7 +49,6 @@ class CategoryController extends Controller
         $model = new ProductCategory();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            AuditLog::record('product.category.created', 'ProductCategory', $model->id);
             Yii::$app->session->setFlash('success', "Category \"{$model->name}\" created.");
             return $this->redirect(['index']);
         }
@@ -62,7 +61,6 @@ class CategoryController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            AuditLog::record('product.category.updated', 'ProductCategory', $model->id);
             Yii::$app->session->setFlash('success', "Category updated.");
             return $this->redirect(['index']);
         }
@@ -80,7 +78,6 @@ class CategoryController extends Controller
         }
 
         $model->softDelete();
-        AuditLog::record('product.category.deleted', 'ProductCategory', $id);
         Yii::$app->session->setFlash('success', "Category deleted.");
 
         return $this->redirect(['index']);

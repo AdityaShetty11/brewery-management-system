@@ -3,7 +3,7 @@
 namespace backend\modules\crm\controllers;
 
 use backend\modules\crm\models\ContactSearch;
-use common\models\AuditLog;
+
 use common\models\CustomerCompany;
 use common\models\CustomerContact;
 use Yii;
@@ -54,7 +54,6 @@ class ContactController extends Controller
         $model->company_id = $company_id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            AuditLog::record('crm.contact.created', 'CustomerContact', $model->id);
             Yii::$app->session->setFlash('success', "Contact \"{$model->getFullName()}\" created.");
             return $this->redirect(['/crm/company/view', 'id' => $model->company_id]);
         }
@@ -73,7 +72,6 @@ class ContactController extends Controller
         $companies = CustomerCompany::find()->select(['name', 'id'])->indexBy('id')->column();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            AuditLog::record('crm.contact.updated', 'CustomerContact', $model->id);
             Yii::$app->session->setFlash('success', "Contact updated.");
             return $this->redirect(['/crm/company/view', 'id' => $model->company_id]);
         }
@@ -90,7 +88,6 @@ class ContactController extends Controller
         $companyId  = $model->company_id;
         $model->softDelete();
 
-        AuditLog::record('crm.contact.deleted', 'CustomerContact', $id);
         Yii::$app->session->setFlash('success', 'Contact removed.');
 
         return $this->redirect(['/crm/company/view', 'id' => $companyId]);

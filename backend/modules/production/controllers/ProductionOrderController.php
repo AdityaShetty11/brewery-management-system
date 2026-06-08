@@ -3,7 +3,7 @@
 namespace backend\modules\production\controllers;
 
 use backend\modules\production\models\ProductionOrderSearch;
-use common\models\AuditLog;
+
 use common\models\Order;
 use common\models\Product;
 use common\models\ProductionOrder;
@@ -66,7 +66,6 @@ class ProductionOrderController extends Controller
         $orderList   = \yii\helpers\ArrayHelper::map($orders,   'id', 'order_number');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            AuditLog::record('production_order.created', 'ProductionOrder', $model->id);
             Yii::$app->session->setFlash('success', "Production order {$model->reference} created.");
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -128,7 +127,6 @@ class ProductionOrderController extends Controller
         }
 
         $model->softDelete();
-        AuditLog::record('production_order.deleted', 'ProductionOrder', $id);
         Yii::$app->session->setFlash('success', "Production order deleted.");
 
         return $this->redirect(['index']);

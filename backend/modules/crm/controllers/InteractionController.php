@@ -2,7 +2,7 @@
 
 namespace backend\modules\crm\controllers;
 
-use common\models\AuditLog;
+
 use common\models\CustomerCompany;
 use common\models\CustomerContact;
 use common\models\CrmInteraction;
@@ -48,7 +48,6 @@ class InteractionController extends Controller
         $contactList = \yii\helpers\ArrayHelper::map($contacts, 'id', 'fullName');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            AuditLog::record('crm.interaction.created', 'CrmInteraction', $model->id);
             Yii::$app->session->setFlash('success', 'Interaction logged.');
             return $this->redirect(['/crm/company/view', 'id' => $company_id]);
         }
@@ -69,7 +68,6 @@ class InteractionController extends Controller
         $contactList = \yii\helpers\ArrayHelper::map($contacts, 'id', 'fullName');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            AuditLog::record('crm.interaction.updated', 'CrmInteraction', $model->id);
             Yii::$app->session->setFlash('success', 'Interaction updated.');
             return $this->redirect(['/crm/company/view', 'id' => $model->company_id]);
         }
@@ -86,8 +84,6 @@ class InteractionController extends Controller
         $model     = $this->findModel($id);
         $companyId = $model->company_id;
         $model->softDelete();
-
-        AuditLog::record('crm.interaction.deleted', 'CrmInteraction', $id);
 
         return $this->redirect(['/crm/company/view', 'id' => $companyId]);
     }

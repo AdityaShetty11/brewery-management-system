@@ -56,11 +56,10 @@ class SignupForm extends Model
         $user = new User();
         $user->username = $this->username;
         $user->email    = $this->email;
-        $user->status   = User::STATUS_INACTIVE;
+        $user->status   = User::STATUS_ACTIVE; // auto-activate (no email verification required locally)
 
         $user->setPassword($this->password);
         $user->generateAuthKey();
-        $user->generateEmailVerificationToken();
 
         if (!$user->save()) {
             return null;
@@ -72,8 +71,6 @@ class SignupForm extends Model
         if ($customerRole) {
             $auth->assign($customerRole, $user->getId());
         }
-
-        $this->sendVerificationEmail($user);
 
         return $user;
     }

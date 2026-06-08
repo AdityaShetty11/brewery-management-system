@@ -2,7 +2,7 @@
 
 namespace backend\modules\production\controllers;
 
-use common\models\AuditLog;
+
 use common\models\Batch;
 use common\models\BatchIngredient;
 use common\models\ProductionOrder;
@@ -56,7 +56,6 @@ class BatchController extends Controller
         $brewMasters = $this->getBrewMasterList();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            AuditLog::record('batch.created', 'Batch', $model->id);
             Yii::$app->session->setFlash('success', "Batch {$model->batch_number} created.");
             return $this->redirect(['/production/production-order/view', 'id' => $production_order_id]);
         }
@@ -171,7 +170,6 @@ class BatchController extends Controller
         }
 
         $batch->softDelete();
-        AuditLog::record('batch.deleted', 'Batch', $id);
 
         return $this->redirect(['/production/production-order/view', 'id' => $orderId]);
     }

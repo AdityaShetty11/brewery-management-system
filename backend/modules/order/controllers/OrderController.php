@@ -3,7 +3,7 @@
 namespace backend\modules\order\controllers;
 
 use backend\modules\order\models\OrderSearch;
-use common\models\AuditLog;
+
 use common\models\Order;
 use common\models\OrderItem;
 use common\models\Product;
@@ -168,7 +168,6 @@ class OrderController extends Controller
         }
 
         $order->softDelete();
-        AuditLog::record('order.deleted', 'Order', $id);
         Yii::$app->session->setFlash('success', "Order {$order->order_number} deleted.");
 
         return $this->redirect(['index']);

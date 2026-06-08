@@ -2,7 +2,6 @@
 
 namespace frontend\models;
 
-use common\models\AuditLog;
 use common\models\User;
 use Yii;
 use yii\base\Model;
@@ -61,10 +60,6 @@ class LoginForm extends Model
 
         $duration = $this->rememberMe ? 3600 * 24 * 30 : 0;
         $loggedIn = Yii::$app->user->login($this->getUser(), $duration);
-
-        if ($loggedIn) {
-            AuditLog::record('login');
-        }
 
         return $loggedIn;
     }

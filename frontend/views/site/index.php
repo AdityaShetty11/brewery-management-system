@@ -5,11 +5,12 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$this->title = 'Hops & Barrel Brewery';
+$this->title = 'Hofer BrauHaus';
 ?>
 
 <div class="py-5 text-center">
-    <h1 class="display-5 fw-bold">🍺 Hops &amp; Barrel Brewery</h1>
+    <img src="/images/logo.png" alt="Hofer BrauHaus Logo" class="mb-4" style="width:140px;height:140px;object-fit:contain;">
+    <h1 class="display-5 fw-bold">Hofer BrauHaus</h1>
     <p class="lead text-muted col-md-6 mx-auto">
         Craft beers brewed with passion. Browse our catalog, place orders, and track deliveries — all in one place.
     </p>

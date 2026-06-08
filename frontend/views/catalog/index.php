@@ -18,7 +18,7 @@ $products    = $dataProvider->getModels();
 <!-- ── Hero ──────────────────────────────────────────────────────── -->
 <div class="py-4 mb-4 border-bottom">
     <h1 class="h3 mb-1">Our Beers</h1>
-    <p class="text-muted mb-0">Handcrafted at Hops & Barrel. Browse our full lineup.</p>
+    <p class="text-muted mb-0">Handcrafted at Hofer BrauHaus. Browse our full lineup.</p>
 </div>
 
 <!-- ── Filter Bar ────────────────────────────────────────────────── -->

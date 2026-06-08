@@ -3,7 +3,7 @@
 namespace backend\modules\product\controllers;
 
 use backend\modules\product\models\ProductSearch;
-use common\models\AuditLog;
+
 use common\models\Product;
 use common\models\ProductCategory;
 use common\models\StockTransaction;
@@ -67,7 +67,6 @@ class ProductController extends Controller
         $categories = $this->getCategoryList();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            AuditLog::record('product.created', 'Product', $model->id);
             Yii::$app->session->setFlash('success', "Product \"{$model->name}\" created.");
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -81,7 +80,6 @@ class ProductController extends Controller
         $categories = $this->getCategoryList();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            AuditLog::record('product.updated', 'Product', $model->id);
             Yii::$app->session->setFlash('success', "Product updated.");
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -94,7 +92,6 @@ class ProductController extends Controller
         $model = $this->findModel($id);
         $model->softDelete();
 
-        AuditLog::record('product.deleted', 'Product', $id);
         Yii::$app->session->setFlash('success', "Product \"{$model->name}\" removed.");
 
         return $this->redirect(['index']);
@@ -129,7 +126,6 @@ class ProductController extends Controller
         $adjustedQty = $type === StockTransaction::TYPE_OUT ? -abs($qty) : abs($qty);
         $model->adjustStock($adjustedQty, $type, 'manual', null, $notes);
 
-        AuditLog::record('product.stock_adjusted', 'Product', $id, ['old' => $model->stock_qty - $adjustedQty], ['new' => $model->stock_qty]);
         Yii::$app->session->setFlash('success', "Stock updated. New quantity: {$model->stock_qty}.");
 
         return $this->redirect(['view', 'id' => $id]);

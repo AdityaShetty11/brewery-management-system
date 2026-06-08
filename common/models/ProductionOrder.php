@@ -136,9 +136,6 @@ class ProductionOrder extends ActiveRecord
             return false;
         }
 
-        AuditLog::record('production_order.status_change', 'ProductionOrder', $this->id,
-            ['status' => $old], ['status' => $newStatus]);
-
         return true;
     }
 

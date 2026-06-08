@@ -3,7 +3,7 @@
 namespace backend\modules\crm\controllers;
 
 use backend\modules\crm\models\CompanySearch;
-use common\models\AuditLog;
+
 use common\models\CustomerCompany;
 use Yii;
 use yii\filters\AccessControl;
@@ -64,7 +64,6 @@ class CompanyController extends Controller
         $model->created_by = Yii::$app->user->id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            AuditLog::record('crm.company.created', 'CustomerCompany', $model->id);
             Yii::$app->session->setFlash('success', "Company \"{$model->name}\" created.");
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -77,7 +76,6 @@ class CompanyController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            AuditLog::record('crm.company.updated', 'CustomerCompany', $model->id);
             Yii::$app->session->setFlash('success', "Company \"{$model->name}\" updated.");
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -90,7 +88,6 @@ class CompanyController extends Controller
         $model = $this->findModel($id);
         $model->softDelete();
 
-        AuditLog::record('crm.company.deleted', 'CustomerCompany', $id);
         Yii::$app->session->setFlash('success', "Company \"{$model->name}\" removed.");
 
         return $this->redirect(['index']);

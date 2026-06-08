@@ -201,8 +201,5 @@ class User extends ActiveRecord implements IdentityInterface
 
     // Relationships
 
-    public function getAuditLogs(): \yii\db\ActiveQuery
-    {
-        return $this->hasMany(AuditLog::class, ['user_id' => 'id']);
-    }
 }
+

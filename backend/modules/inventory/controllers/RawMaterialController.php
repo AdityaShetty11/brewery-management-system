@@ -4,7 +4,7 @@ namespace backend\modules\inventory\controllers;
 
 use backend\modules\inventory\models\RawMaterialSearch;
 use backend\modules\inventory\models\StockTransactionSearch;
-use common\models\AuditLog;
+
 use common\models\RawMaterial;
 use common\models\StockTransaction;
 use Yii;
@@ -86,7 +86,6 @@ class RawMaterialController extends Controller
         $model = new RawMaterial();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            AuditLog::record('inventory.raw_material.created', 'RawMaterial', $model->id);
             Yii::$app->session->setFlash('success', "Raw material \"{$model->name}\" created.");
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -99,7 +98,6 @@ class RawMaterialController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            AuditLog::record('inventory.raw_material.updated', 'RawMaterial', $model->id);
             Yii::$app->session->setFlash('success', "Material updated.");
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -125,14 +123,6 @@ class RawMaterialController extends Controller
 
         $model->adjustStock($adjustedQty, $type, 'manual', null, $notes);
 
-        AuditLog::record(
-            'inventory.stock_adjusted',
-            'RawMaterial',
-            $id,
-            ['stock_qty' => $oldQty],
-            ['stock_qty' => $model->stock_qty]
-        );
-
         Yii::$app->session->setFlash('success',
             "Stock updated for \"{$model->name}\". New quantity: {$model->stock_qty} {$model->unit}."
         );
@@ -145,7 +135,6 @@ class RawMaterialController extends Controller
         $model = $this->findModel($id);
         $model->softDelete();
 
-        AuditLog::record('inventory.raw_material.deleted', 'RawMaterial', $id);
         Yii::$app->session->setFlash('success', "Material \"{$model->name}\" removed.");
 
         return $this->redirect(['index']);

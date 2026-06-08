@@ -159,9 +159,6 @@ class Batch extends ActiveRecord
             return false;
         }
 
-        AuditLog::record('batch.status_change', 'Batch', $this->id,
-            ['status' => $old], ['status' => $newStatus]);
-
         return true;
     }
 

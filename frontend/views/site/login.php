@@ -14,9 +14,10 @@ $this->title = 'Login';
 
         <div class="card shadow-sm">
             <div class="card-body p-4">
-                <h1 class="card-title h4 mb-4 text-center">
-                    <i class="bi bi-cup-hot-fill text-warning me-2"></i>Sign In
-                </h1>
+                <div class="text-center mb-3">
+                    <img src="/images/logo.png" alt="Hofer BrauHaus Logo" style="width:90px;height:90px;object-fit:contain;">
+                </div>
+                <h1 class="card-title h4 mb-4 text-center">Sign In</h1>
 
                 <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 

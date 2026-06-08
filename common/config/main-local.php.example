@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * Local database configuration — NOT committed to version control.
+ *
+ * SETUP: Copy this file to main-local.php and adjust the values below
+ * to match your local environment.
+ *
+ *   cp common/config/main-local.php.example common/config/main-local.php
+ */
+return [
+    'components' => [
+        'db' => [
+            'class'    => 'yii\db\Connection',
+            'dsn'      => 'mysql:host=127.0.0.1;dbname=brewery_management;port=3306',
+            'username' => 'root',
+            'password' => '',
+            'charset'  => 'utf8mb4',
+        ],
+    ],
+];

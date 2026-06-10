@@ -242,6 +242,22 @@ class Order extends ActiveRecord
         ];
     }
 
+    public static function statusIcons(): array
+    {
+        return [
+            self::STATUS_DRAFT         => 'bi-pencil-square',
+            self::STATUS_CONFIRMED     => 'bi-check2-circle',
+            self::STATUS_IN_PRODUCTION => 'bi-gear-fill',
+            self::STATUS_DELIVERED     => 'bi-truck',
+            self::STATUS_CANCELLED     => 'bi-x-circle',
+        ];
+    }
+
+    public function getStatusIcon(): string
+    {
+        return self::statusIcons()[$this->status] ?? 'bi-circle';
+    }
+
     public function getStatusLabel(): string
     {
         return self::statusLabels()[$this->status] ?? $this->status;
@@ -250,7 +266,8 @@ class Order extends ActiveRecord
     public function getStatusBadge(): string
     {
         $class = self::statusBadgeClass()[$this->status] ?? 'bg-secondary';
-        return "<span class=\"badge {$class}\">{$this->getStatusLabel()}</span>";
+        $icon  = self::statusIcons()[$this->status]      ?? 'bi-circle';
+        return "<span class=\"badge {$class}\"><i class=\"bi {$icon} me-1\"></i>{$this->getStatusLabel()}</span>";
     }
 
     public function getFormattedTotal(): string

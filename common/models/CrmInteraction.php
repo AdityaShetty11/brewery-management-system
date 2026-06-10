@@ -126,4 +126,20 @@ class CrmInteraction extends ActiveRecord
     {
         return self::typeIcons()[$this->type] ?? 'bi-chat';
     }
+
+    public static function typeBadgeClass(): array
+    {
+        return [
+            self::TYPE_CALL    => 'bg-primary',
+            self::TYPE_EMAIL   => 'bg-info text-dark',
+            self::TYPE_MEETING => 'bg-success',
+            self::TYPE_NOTE    => 'bg-secondary',
+        ];
+    }
+
+    public function getTypeBadge(): string
+    {
+        $class = self::typeBadgeClass()[$this->type] ?? 'bg-secondary';
+        return "<span class=\"badge {$class}\"><i class=\"bi {$this->getTypeIcon()} me-1\"></i>{$this->getTypeLabel()}</span>";
+    }
 }

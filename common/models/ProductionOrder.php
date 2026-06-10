@@ -208,14 +208,30 @@ class ProductionOrder extends ActiveRecord
         ];
     }
 
+    public static function statusIcons(): array
+    {
+        return [
+            self::STATUS_PLANNED     => 'bi-clipboard',
+            self::STATUS_IN_PROGRESS => 'bi-gear-fill',
+            self::STATUS_COMPLETED   => 'bi-check-circle-fill',
+            self::STATUS_CANCELLED   => 'bi-x-circle',
+        ];
+    }
+
     public function getStatusLabel(): string
     {
         return self::statusLabels()[$this->status] ?? $this->status;
     }
 
+    public function getStatusIcon(): string
+    {
+        return self::statusIcons()[$this->status] ?? 'bi-circle';
+    }
+
     public function getStatusBadge(): string
     {
         $class = self::statusBadgeClass()[$this->status] ?? 'bg-secondary';
-        return "<span class=\"badge {$class}\">{$this->getStatusLabel()}</span>";
+        $icon  = self::statusIcons()[$this->status]      ?? 'bi-circle';
+        return "<span class=\"badge {$class}\"><i class=\"bi {$icon} me-1\"></i>{$this->getStatusLabel()}</span>";
     }
 }

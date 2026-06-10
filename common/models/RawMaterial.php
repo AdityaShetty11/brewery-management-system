@@ -72,6 +72,11 @@ class RawMaterial extends ActiveRecord
         return $this->stock_qty <= $this->reorder_level;
     }
 
+    public function getFormattedStock(): string
+    {
+        return number_format((float) $this->stock_qty, 2) . ' ' . $this->unit;
+    }
+
     /**
      * Adjust stock and write a StockTransaction row.
      * Use positive qty for 'in', negative for 'out'.

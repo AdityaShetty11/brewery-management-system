@@ -10,8 +10,10 @@ use common\models\StockTransaction;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\helpers\FileHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\UploadedFile;
 
 /**
  * Manages the product catalogue — CRUD, stock adjustments, toggle active.
@@ -66,9 +68,15 @@ class ProductController extends Controller
         $model      = new Product();
         $categories = $this->getCategoryList();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', "Product \"{$model->name}\" created.");
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+            if ($model->validate()) {
+                $this->handleImageUpload($model);
+                if ($model->save(false)) {
+                    Yii::$app->session->setFlash('success', "Product \"{$model->name}\" created.");
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            }
         }
 
         return $this->render('create', ['model' => $model, 'categories' => $categories]);
@@ -79,9 +87,15 @@ class ProductController extends Controller
         $model      = $this->findModel($id);
         $categories = $this->getCategoryList();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', "Product updated.");
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+            if ($model->validate()) {
+                $this->handleImageUpload($model);
+                if ($model->save(false)) {
+                    Yii::$app->session->setFlash('success', 'Product updated.');
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            }
         }
 
         return $this->render('update', ['model' => $model, 'categories' => $categories]);
@@ -134,6 +148,29 @@ class ProductController extends Controller
     private function getCategoryList(): array
     {
         return ProductCategory::find()->select(['name', 'id'])->indexBy('id')->column();
+    }
+
+    /**
+     * Saves the uploaded image file and updates $model->image.
+     * Deletes the old image if a new one is provided.
+     */
+    private function handleImageUpload(Product $model): void
+    {
+        if ($model->imageFile === null) {
+            return;
+        }
+
+        $uploadDir = Yii::getAlias('@webroot') . '/uploads/products';
+        FileHelper::createDirectory($uploadDir);
+
+        // Remove previous image file
+        if ($model->image && file_exists($uploadDir . '/' . $model->image)) {
+            @unlink($uploadDir . '/' . $model->image);
+        }
+
+        $fileName = 'product_' . uniqid() . '.' . $model->imageFile->extension;
+        $model->imageFile->saveAs($uploadDir . '/' . $fileName);
+        $model->image = $fileName;
     }
 
     private function findModel(int $id): Product

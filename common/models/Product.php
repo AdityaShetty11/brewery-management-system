@@ -17,12 +17,15 @@ use yii\db\ActiveQuery;
  * @property float       $unit_price
  * @property int         $stock_qty
  * @property int         $is_active
+ * @property string|null $image
  * @property string      $created_at
  * @property string      $updated_at
  * @property string|null $deleted_at
  */
 class Product extends ActiveRecord
 {
+    /** Holds the uploaded file instance — not persisted to DB directly. */
+    public $imageFile = null;
     // Packaging type constants — mirrors the ENUM in the DB
     const PACK_KEG    = 'keg';
     const PACK_CAN    = 'can';
@@ -60,6 +63,12 @@ class Product extends ActiveRecord
                 'targetClass'     => ProductCategory::class,
                 'targetAttribute' => ['category_id' => 'id'],
             ],
+
+            [['imageFile'], 'image', 'skipOnEmpty' => true,
+                'extensions' => 'png, jpg, jpeg, gif, webp',
+                'maxSize'    => 2 * 1024 * 1024,
+                'tooBig'     => 'Image must be smaller than 2 MB.',
+            ],
         ];
     }
 
@@ -75,6 +84,8 @@ class Product extends ActiveRecord
             'unit_price'     => 'Unit Price ($)',
             'stock_qty'      => 'Stock Quantity',
             'is_active'      => 'Active',
+            'image'          => 'Image',
+            'imageFile'      => 'Product Image',
             'created_at'     => 'Created',
             'updated_at'     => 'Last Updated',
         ];

@@ -13,11 +13,16 @@
         "yiisoft/yii2-symfonymailer": "~2.0.0"
     },
 
+    "require-dev": {
+        "phpunit/phpunit": "^10.5"
+    },
+
     "config": {
         "process-timeout": 1800,
         "allow-plugins": {
             "yiisoft/yii2-composer": true
-        }
+        },
+        "platform-check": false
     },
 
     "repositories": [
@@ -33,6 +38,12 @@
             "frontend\\": "frontend/",
             "backend\\": "backend/",
             "console\\": "console/"
+        }
+    },
+
+    "autoload-dev": {
+        "psr-4": {
+            "tests\\": "tests/"
         }
     },
 

@@ -8,6 +8,7 @@
 /console/runtime/
 /common/runtime/
 /backend/web/assets/
+/backend/web/uploads/
 /frontend/web/assets/
 /backend/web/index-test.php
 /frontend/web/index-test.php

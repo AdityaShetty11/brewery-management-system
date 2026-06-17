@@ -9,7 +9,7 @@ use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
 ?>
 
-<?php $form = ActiveForm::begin(); ?>
+<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
 <div class="row g-3">
     <div class="col-md-8">
@@ -42,6 +42,18 @@ use yii\helpers\Html;
 
     <div class="col-12">
         <?= $form->field($model, 'description')->textarea(['rows' => 4]) ?>
+    </div>
+
+    <div class="col-12">
+        <?= $form->field($model, 'imageFile')->fileInput(['accept' => 'image/*']) ?>
+        <?php if (!$model->isNewRecord && $model->image): ?>
+            <div class="mt-2 d-flex align-items-center gap-3">
+                <img src="<?= Yii::$app->request->baseUrl . '/uploads/products/' . Html::encode($model->image) ?>"
+                     alt="Current product image"
+                     class="img-thumbnail" style="max-height: 100px; object-fit: contain;">
+                <span class="text-muted small">Upload a new image to replace the current one.</span>
+            </div>
+        <?php endif; ?>
     </div>
 </div>
 

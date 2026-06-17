@@ -34,6 +34,13 @@ $this->title = $model->name;
         <div class="card shadow-sm mb-4">
             <div class="card-header fw-semibold"><i class="bi bi-info-circle me-1"></i>Details</div>
             <div class="card-body">
+                <?php if ($model->image): ?>
+                    <div class="text-center mb-3">
+                        <img src="<?= Yii::$app->request->baseUrl . '/uploads/products/' . Html::encode($model->image) ?>"
+                             alt="<?= Html::encode($model->name) ?>"
+                             class="img-fluid rounded" style="max-height: 200px; object-fit: contain;">
+                    </div>
+                <?php endif; ?>
                 <dl class="row mb-0">
                     <dt class="col-sm-5 text-muted">Category</dt>
                     <dd class="col-sm-7"><?= Html::encode($model->category->name ?? '—') ?></dd>
